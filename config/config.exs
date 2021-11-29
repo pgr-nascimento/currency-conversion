@@ -13,7 +13,9 @@ config :currency_conversion, CurrencyConversionWeb.Endpoint,
   secret_key_base: "vUk3nCHcFmySGRSMRNZFlBTraJuD2R7mctI83P+TZtk48QciFNsnCo4FRIk5yMXU",
   render_errors: [view: CurrencyConversionWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: CurrencyConversion.PubSub,
-  live_view: [signing_salt: "4eg7Tp5b"]
+  live_view: [signing_salt: "4eg7Tp5b"],
+  api_key: "4073344916d44278d7b1b860d2ff346b"
+
 
 # Configures Elixir's Logger
 config :logger, :console,
