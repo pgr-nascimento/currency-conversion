@@ -1,4 +1,4 @@
-defmodule CurrencyConversion.Fixtures.ExchangeRate do
+defmodule CurrencyConversion.Support.Fixtures.ExchangeRate do
   @moduledoc """
   Fixtures for HTTP responses from ExchangeRate
   """

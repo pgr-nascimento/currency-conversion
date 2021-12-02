@@ -4,6 +4,7 @@ defmodule CurrencyConversion.ExchangeRateTest do
   use ExUnit.Case, async: true
 
   alias CurrencyConversion.ExchangeRate
+  alias CurrencyConversion.Support.Fixtures
 
   setup do
     bypass = Bypass.open()
@@ -22,7 +23,7 @@ defmodule CurrencyConversion.ExchangeRateTest do
 
   describe "convert/3" do
     test "with an success request, it returns a tuple with the formated data", %{bypass: bypass, params: params} do
-      request_response = CurrencyConversion.Fixtures.ExchangeRate.success_converted(params)
+      request_response = Fixtures.ExchangeRate.success_converted(params)
 
       Bypass.expect(bypass, fn conn ->
         Plug.Conn.send_resp(conn, 200, request_response)
