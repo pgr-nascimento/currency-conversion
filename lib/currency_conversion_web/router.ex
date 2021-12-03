@@ -7,5 +7,7 @@ defmodule CurrencyConversionWeb.Router do
 
   scope "/api", CurrencyConversionWeb do
     pipe_through :api
+
+    get "/convert", ConvertController, :show
   end
 end
