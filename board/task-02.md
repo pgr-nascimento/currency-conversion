@@ -2,8 +2,6 @@
 
 ## Description
 
-## Description
-
 We need to implement a service that has the amount of a specific currency, or the service can convert the amount from a currency to
 another. The recommended services are not the best option at this moment, because the convert endpoint is premium (I need to pay to use), and the 
 unique free endpoint you need to pass which currencies you would like to convert one unit of the base currency, but I need to be premium to 
