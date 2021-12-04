@@ -9,7 +9,9 @@ defmodule CurrencyConversion.ExchangeRateTest do
   setup do
     bypass = Bypass.open()
 
-    Application.put_env(:currency_conversion, CurrencyConversion, exchange_rate_endpoint: "http://localhost:#{bypass.port}/convert")
+    Application.put_env(:currency_conversion, :exchange_rate,
+      endpoint: "http://localhost:#{bypass.port}/"
+    )
 
     params = %{
       from: "USD",
@@ -22,23 +24,28 @@ defmodule CurrencyConversion.ExchangeRateTest do
   end
 
   describe "convert/3" do
-    test "with an success request, it returns a tuple with the formated data", %{bypass: bypass, params: params} do
+    test "with an success request, it returns a tuple with the formated data", %{
+      bypass: bypass,
+      params: params
+    } do
       request_response = Fixtures.ExchangeRate.success_converted(params)
 
       Bypass.expect(bypass, fn conn ->
         Plug.Conn.send_resp(conn, 200, request_response)
       end)
 
-      expected_response = {:ok,
-      %{
-        base_currency: "USD",
-        target_currency: "BRL",
-        base_amount: 10,
-        converted_amount: 56.01,
-        message: "10 USD -> 56.01 BRL"
-      }}
+      expected_response =
+        {:ok,
+         %{
+           base_currency: "USD",
+           target_currency: "BRL",
+           base_amount: 10,
+           converted_amount: 56.01,
+           message: "10 USD -> 56.01 BRL"
+         }}
 
-      assert expected_response == ExchangeRate.convert(%{base_currency: "USD", target_currency: "BRL", amount: 10})
+      assert expected_response ==
+               ExchangeRate.convert(%{base_currency: "USD", target_currency: "BRL", amount: 10})
     end
 
     test "when something wrong, it returns a tuple with the error", %{bypass: bypass} do
@@ -48,7 +55,8 @@ defmodule CurrencyConversion.ExchangeRateTest do
         Plug.Conn.send_resp(conn, 500, request_response)
       end)
 
-      assert {:error, "The service is not responding"} == ExchangeRate.convert(%{base_currency: "USD", target_currency: "BRL", amount: 10})
+      assert {:error, "The service is not responding"} ==
+               ExchangeRate.convert(%{base_currency: "USD", target_currency: "BRL", amount: 10})
     end
   end
 end

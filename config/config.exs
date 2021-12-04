@@ -24,8 +24,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Config related to ExchangeRate API
-config :currency_conversion, ExchangeRate,
-  endpoint: "https://api.exchangerate.host/convert"
+config :currency_conversion, :exchange_rate, endpoint: "https://api.exchangerate.host/convert"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
