@@ -175,13 +175,15 @@ defmodule CurrencyConversion.Currency do
   ]
 
   @doc """
-  Check if the currency received is valid (the string exists in @valid_curriencies?)
+  Validate if the base and target currencies are valid
   """
-  @spec valid?(String.t()) :: boolean()
-
-  def valid?(nil), do: false
-
-  def valid?(currency) do
-    String.upcase(currency) in @valid_curriencies
+  def validate(%{base_currency: currency}) when currency not in @valid_curriencies do
+    {:error, "The from currency is not valid"}
   end
+
+  def validate(%{target_currency: currency}) when currency not in @valid_curriencies do
+    {:error, "The to currency is not valid"}
+  end
+
+  def validate(params), do: {:ok, params}
 end

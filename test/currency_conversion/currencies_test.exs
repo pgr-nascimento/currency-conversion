@@ -4,24 +4,32 @@ defmodule CurrencyConversion.CurrencyTest do
   use ExUnit.Case, async: true
   alias CurrencyConversion.Currency
 
-  describe "valid?/1" do
-    test "with a valid currency, it returns true" do
-      Enum.map(currencies(), fn currency ->
-        assert true == Currency.valid?(currency)
-      end)
+  describe "validate/1" do
+    test "with valid currencies, it returns a tuple {:ok, params}" do
+      params = %{
+        base_currency: Enum.random(currencies()),
+        target_currency: Enum.random(currencies())
+      }
+
+      assert {:ok, ^params} = Currency.validate(params)
     end
 
-    test "with an invalid currency or something is not a currency, it returns false" do
-      invalid_currency = "ALN"
-      any_string = "JKLA"
-      word = "john"
-      empty = ""
+    test "with an invalid base_currency, it returns a tuple {:error, message}" do
+      params = %{
+        base_currency: "ALN",
+        target_currency: Enum.random(currencies())
+      }
 
-      assert false == Currency.valid?(invalid_currency)
-      assert false == Currency.valid?(any_string)
-      assert false == Currency.valid?(word)
-      assert false == Currency.valid?(empty)
-      assert false == Currency.valid?(nil)
+      assert {:error, "The from currency is not valid"} == Currency.validate(params)
+    end
+
+    test "with an invalid target_currency, it returns a tuple {:error, message}" do
+      params = %{
+        base_currency: Enum.random(currencies()),
+        target_currency: "ALN"
+      }
+
+      assert {:error, "The to currency is not valid"} == Currency.validate(params)
     end
   end
 
