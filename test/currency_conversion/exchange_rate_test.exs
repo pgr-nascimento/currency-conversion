@@ -1,7 +1,7 @@
 defmodule CurrencyConversion.ExchangeRateTest do
   @moduledoc false
 
-  use ExUnit.Case, async: true
+  use ExUnit.Case
 
   alias CurrencyConversion.ExchangeRate
   alias CurrencyConversion.Support.Fixtures
