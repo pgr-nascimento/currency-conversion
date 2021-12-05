@@ -57,3 +57,29 @@ $ docker-compose up
 ## Running the tests
 
 `$ docker-compose run -e MIX_ENV=test --rm app mix test`
+
+## Next Steps
+
+For now, I believe the application delivers what it is proposed to do if we think about this like an MVP product. But improvements could be made to improve it and let the application more robust.
+
+1. Has one or more fallback APIs to call.
+We are using a free API, we don't have the reliability this API will work 100% of the time, we don't have any information about the error that 
+could happen (there isn't documentation about it) and I believe if we add one or more APIs like to fall back the main API can be a good option.
+
+With it in mind some improvements could be made to improve the code, like:
+
+* Create an APIClient module: if we had more than one API, we will start having more than one HTTPoison reference in the application.
+The APIClient would be the only module responsible to do the external requests and the API modules responsible to know about the endpoint, the
+params, and how to return the values.
+
+* Create an intelligent switch: with more than one API implemented, we can be thinking about:
+- Wow, what about having a test A/B to check how API is better for us
+- If we need to change the main API we will do this for all customers at once? A feature rollout starts being relevant to us.
+- If we are almost reaching the request limit of an API, the application could recognize it and change it for the other API. This can save us to
+save good money, for instance.
+
+2. Identify who are requesting our service
+
+This can be an important feature if we would like to know better about our customers, how many requests each one does: for day/week/month... Or 
+if we would like to restrict the API for some reason, free users just could call 100 times for an hour (for instance). If we identify who is 
+requesting the API this kind of demand will be more simplest with we just accept permitted customers to do the requests.
