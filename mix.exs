@@ -40,7 +40,8 @@ defmodule CurrencyConversion.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
-      {:bypass, "~> 2.1", only: :test}
+      {:bypass, "~> 2.1", only: :test},
+      {:credo, "~> 1.5", only: [:dev, :test]}
     ]
   end
 
