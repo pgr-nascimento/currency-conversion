@@ -178,12 +178,12 @@ defmodule CurrencyConversion.Currency do
   Validate if the base and target currencies are valid
   """
   def validate(%{base_currency: currency}) when currency not in @valid_curriencies do
-    {:error, "The from currency is not valid"}
+    {:error, {:invalid_currency, "The from currency is not valid"}}
   end
 
   def validate(%{target_currency: currency}) when currency not in @valid_curriencies do
-    {:error, "The to currency is not valid"}
+    {:error, {:invalid_currency, "The to currency is not valid"}}
   end
 
-  def validate(params), do: {:ok, params}
+  def validate(_params), do: :ok
 end

@@ -11,7 +11,7 @@ defmodule CurrencyConversion.CurrencyTest do
         target_currency: Enum.random(currencies())
       }
 
-      assert {:ok, ^params} = Currency.validate(params)
+      assert :ok == Currency.validate(params)
     end
 
     test "with an invalid base_currency, it returns a tuple {:error, message}" do
@@ -20,7 +20,8 @@ defmodule CurrencyConversion.CurrencyTest do
         target_currency: Enum.random(currencies())
       }
 
-      assert {:error, "The from currency is not valid"} == Currency.validate(params)
+      assert {:error, {:invalid_currency, "The from currency is not valid"}} ==
+               Currency.validate(params)
     end
 
     test "with an invalid target_currency, it returns a tuple {:error, message}" do
@@ -29,7 +30,8 @@ defmodule CurrencyConversion.CurrencyTest do
         target_currency: "ALN"
       }
 
-      assert {:error, "The to currency is not valid"} == Currency.validate(params)
+      assert {:error, {:invalid_currency, "The to currency is not valid"}} ==
+               Currency.validate(params)
     end
   end
 
